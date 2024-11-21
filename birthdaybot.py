@@ -1,16 +1,15 @@
 import datetime
 import os
-import discord
+from discord import Intents, Client, Message
 from dotenv import load_dotenv
 
-intents = discord.Intents(presences=True, messages=True, members=True)
+intents = Intents(presences=True, messages=True, members=True)
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
-client = discord.Client(intents=intents)
-
+client = Client(intents=intents)
 
 @client.event
 async def on_ready():
