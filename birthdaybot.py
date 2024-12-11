@@ -1,31 +1,24 @@
 import datetime
 import os
+from typing import Generator
 from discord import Intents, Client, Message
+from discord.member import Member
 from dotenv import load_dotenv
-
-intents = Intents(presences=True, messages=True, members=True)
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
+class Client(Client):
+    async def on_ready(self):
+        print(f"{client.user} has connected to Discord!")
+
+    async def on_message(self, message):
+        print(f"Message from {message.author}: {message.content}")
+
+intents = Intents.default()
+intents.message_content = True
+
 client = Client(intents=intents)
-
-@client.event
-async def on_ready():
-    memberlist = []
-    for guild in client.guilds:
-        if guild.id == GUILD:
-            break
-
-    for member in guild.members:
-        memberlist.append(member.name)
-    
-    print(
-        f"User ID:{client.user.id} Name: {client.user.name} has connected to Discord!"
-        f"{guild.name}(id: {guild.id})"
-    )
-
-    print(memberlist)
 
 client.run(TOKEN)
